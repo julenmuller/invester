@@ -1,5 +1,5 @@
 {
-  "name": "projeto-anka",
+  "name": "invester",
   "private": true,
   "scripts": {
     "dev": "pnpm -r --parallel dev",

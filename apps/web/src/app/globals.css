@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Neutral palette for shadcn/ui primitives, expressed as HSL CSS variables.
+ * The theme is dark by default — deep graphite surfaces in layers. The domain
+ * colors (primary / profit / loss / surface / text) live in tokens.ts and are
+ * wired into Tailwind via tailwind.config.ts. These mirror the same graphite
+ * scale so the shadcn primitives sit seamlessly on our surfaces.
+ */
+@layer base {
+  :root {
+    /* Page (deepest) and default text. */
+    --background: 228 22% 5%;
+    --foreground: 228 17% 92%;
+
+    /* Card — one step lighter than the page for depth. */
+    --card: 228 18% 10%;
+    --card-foreground: 228 17% 92%;
+
+    --popover: 228 18% 10%;
+    --popover-foreground: 228 17% 92%;
+
+    /* Raised/muted surface + secondary text. */
+    --muted: 228 14% 16%;
+    --muted-foreground: 222 9% 64%;
+
+    --accent: 228 14% 16%;
+    --accent-foreground: 228 17% 92%;
+
+    --secondary: 228 14% 16%;
+    --secondary-foreground: 228 17% 92%;
+
+    /* Coral red — financial "loss" / destructive. */
+    --destructive: 351 95% 71%;
+    --destructive-foreground: 228 22% 6%;
+
+    /* Soft, low-contrast separations (reads like white at low opacity). */
+    --border: 228 12% 20%;
+    --input: 228 12% 22%;
+    /* Focus ring uses the cyan accent. */
+    --ring: 187 82% 53%;
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-surface-background text-text antialiased;
+    /* Tabular figures everywhere so numbers never jitter as they update. */
+    font-feature-settings: 'tnum' 1, 'cv01' 1;
+  }
+}
