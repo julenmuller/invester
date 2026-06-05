@@ -1,4 +1,5 @@
 import { Portfolio } from '../../src/domain/entities/Portfolio';
+import { NotFoundError } from '../../src/domain/errors/DomainError';
 import {
   PortfolioRepository,
   type Pagination,
@@ -24,5 +25,35 @@ export class InMemoryPortfolioRepository implements PortfolioRepository {
 
   async save(portfolio: Portfolio): Promise<void> {
     this.store.set(portfolio.id, portfolio);
+  }
+
+  async updateName(
+    id: string,
+    name: string,
+    userId: string,
+  ): Promise<Portfolio> {
+    const existing = this.store.get(id);
+    // Ownership scoped like the Prisma version: missing OR not owned => 404.
+    if (!existing || existing.userId !== userId) {
+      throw new NotFoundError('Portfolio');
+    }
+    const updated = Portfolio.create({
+      id: existing.id,
+      name,
+      userId: existing.userId,
+      createdAt: existing.createdAt,
+      assets: [...existing.assets],
+    });
+    this.store.set(id, updated);
+    return updated;
+  }
+
+  async delete(id: string, userId: string): Promise<void> {
+    const existing = this.store.get(id);
+    // Ownership scoped like the Prisma version: missing OR not owned => 404.
+    if (!existing || existing.userId !== userId) {
+      throw new NotFoundError('Portfolio');
+    }
+    this.store.delete(id);
   }
 }

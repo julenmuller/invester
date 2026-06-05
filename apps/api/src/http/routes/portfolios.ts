@@ -20,6 +20,10 @@ const portfolioIdSchema = z.object({
   id: z.string().uuid(),
 });
 
+const renamePortfolioSchema = z.object({
+  name: z.string().min(2).max(60),
+});
+
 // Pagination for the list endpoint. Coerced from query strings; bounded so a
 // single request can't pull the whole table under load.
 const listQuerySchema = z.object({
@@ -58,6 +62,42 @@ export function portfoliosRouter(container: Container): Router {
       next(err);
     }
   });
+
+  router.patch(
+    '/:id',
+    validate(portfolioIdSchema, 'params'),
+    validate(renamePortfolioSchema),
+    async (req, res, next) => {
+      try {
+        if (!req.user) throw new UnauthorizedError();
+        const output = await container.useCases.renamePortfolio.execute({
+          userId: req.user.userId,
+          portfolioId: String(req.params.id),
+          name: req.body.name,
+        });
+        res.status(200).json(output);
+      } catch (err) {
+        next(err);
+      }
+    },
+  );
+
+  router.delete(
+    '/:id',
+    validate(portfolioIdSchema, 'params'),
+    async (req, res, next) => {
+      try {
+        if (!req.user) throw new UnauthorizedError();
+        await container.useCases.deletePortfolio.execute({
+          userId: req.user.userId,
+          portfolioId: String(req.params.id),
+        });
+        res.status(204).send();
+      } catch (err) {
+        next(err);
+      }
+    },
+  );
 
   router.get(
     '/:id',

@@ -16,6 +16,8 @@ import { AddAssetDialog } from '@/features/portfolio/components/add-asset-dialog
 import { AllocationChart } from '@/features/portfolio/components/allocation-chart';
 import { AssetsPanel } from '@/features/portfolio/components/assets-panel';
 import { ProfitabilityCard } from '@/features/portfolio/components/profitability-card';
+import { RenamePortfolioDialog } from '@/features/portfolio/components/rename-portfolio-dialog';
+import { DeletePortfolioDialog } from '@/features/portfolio/components/delete-portfolio-dialog';
 import { usePortfolio } from '@/features/portfolio/hooks';
 import { formatCurrency } from '@/lib/format';
 
@@ -47,7 +49,14 @@ export default function PortfolioDetailPage() {
         <>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-text">{portfolio.name}</h1>
+              <div className="flex items-center gap-1">
+                <h1 className="text-2xl font-bold text-text">{portfolio.name}</h1>
+                <RenamePortfolioDialog
+                  id={portfolio.id}
+                  currentName={portfolio.name}
+                />
+                <DeletePortfolioDialog id={portfolio.id} />
+              </div>
               <p className="text-sm text-text-muted">
                 {portfolio.assets.length}{' '}
                 {portfolio.assets.length === 1 ? 'ativo' : 'ativos'}

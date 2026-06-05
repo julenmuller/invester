@@ -13,6 +13,14 @@ export const createPortfolioSchema = z.object({
     .max(120, 'O nome pode ter no máximo 120 caracteres.'),
 });
 
+export const renamePortfolioSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, 'O nome precisa de pelo menos 2 caracteres.')
+    .max(60, 'O nome pode ter no máximo 60 caracteres.'),
+});
+
 export const addAssetSchema = z.object({
   ticker: z
     .string()
@@ -28,4 +36,5 @@ export const addAssetSchema = z.object({
 });
 
 export type CreatePortfolioFormValues = z.infer<typeof createPortfolioSchema>;
+export type RenamePortfolioFormValues = z.infer<typeof renamePortfolioSchema>;
 export type AddAssetFormValues = z.infer<typeof addAssetSchema>;

@@ -147,3 +147,33 @@ export function useAddAsset(portfolioId: string) {
     },
   });
 }
+
+/** PATCH /portfolios/:id — renomeia a carteira. */
+export function useRenamePortfolio() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, name }: { id: string; name: string }) => {
+      const { data } = await api.patch<
+        Pick<PortfolioListItem, 'id' | 'name' | 'userId' | 'createdAt'>
+      >(`/portfolios/${id}`, { name });
+      return data;
+    },
+    onSuccess: (_data, { id }) => {
+      queryClient.invalidateQueries({ queryKey: portfolioKeys.list() });
+      queryClient.invalidateQueries({ queryKey: portfolioKeys.detail(id) });
+    },
+  });
+}
+
+/** DELETE /portfolios/:id — exclui a carteira. Redirecionamento fica no componente. */
+export function useDeletePortfolio() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      await api.delete(`/portfolios/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: portfolioKeys.list() });
+    },
+  });
+}

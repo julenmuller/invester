@@ -4,9 +4,11 @@ import { AddAssetToPortfolio } from '../application/use-cases/AddAssetToPortfoli
 import { AuthenticateUser } from '../application/use-cases/AuthenticateUser';
 import { CalculatePortfolioValue } from '../application/use-cases/CalculatePortfolioValue';
 import { CreatePortfolio } from '../application/use-cases/CreatePortfolio';
+import { DeletePortfolio } from '../application/use-cases/DeletePortfolio';
 import { GetPortfolio } from '../application/use-cases/GetPortfolio';
 import { ListPortfolios } from '../application/use-cases/ListPortfolios';
 import { RegisterUser } from '../application/use-cases/RegisterUser';
+import { RenamePortfolioUseCase } from '../application/use-cases/RenamePortfolioUseCase';
 import type { TokenService } from '../domain/services/TokenService';
 import { BrapiPriceProvider } from '../infrastructure/external/BrapiPriceProvider';
 import { CachedPriceProvider } from '../infrastructure/external/CachedPriceProvider';
@@ -26,6 +28,8 @@ export interface Container {
     addAssetToPortfolio: AddAssetToPortfolio;
     getPortfolio: GetPortfolio;
     listPortfolios: ListPortfolios;
+    renamePortfolio: RenamePortfolioUseCase;
+    deletePortfolio: DeletePortfolio;
     calculatePortfolioValue: CalculatePortfolioValue;
   };
 }
@@ -60,6 +64,8 @@ export function buildContainer(deps: ContainerDeps): Container {
       addAssetToPortfolio: new AddAssetToPortfolio(portfolios, assets, ids),
       getPortfolio: new GetPortfolio(portfolios, prices),
       listPortfolios: new ListPortfolios(portfolios),
+      renamePortfolio: new RenamePortfolioUseCase(portfolios),
+      deletePortfolio: new DeletePortfolio(portfolios),
       calculatePortfolioValue: new CalculatePortfolioValue(portfolios, prices),
     },
   };

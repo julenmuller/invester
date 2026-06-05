@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { Asset, AssetType } from '../../domain/entities/Asset';
 import { Portfolio } from '../../domain/entities/Portfolio';
+import { NotFoundError } from '../../domain/errors/DomainError';
 import {
   PortfolioRepository,
   type Pagination,
@@ -44,6 +45,38 @@ export class PrismaPortfolioRepository implements PortfolioRepository {
         createdAt: portfolio.createdAt,
       },
     });
+  }
+
+  async updateName(
+    id: string,
+    name: string,
+    userId: string,
+  ): Promise<Portfolio> {
+    // Ownership is enforced in the WHERE clause: only a row owned by `userId`
+    // is touched. updateMany lets us scope by both id and userId at once.
+    const result = await this.prisma.portfolio.updateMany({
+      where: { id, userId },
+      data: { name },
+    });
+    if (result.count === 0) {
+      // No portfolio with that id for this user (missing or not owned).
+      throw new NotFoundError('Portfolio');
+    }
+    const updated = await this.findById(id);
+    if (!updated) throw new NotFoundError('Portfolio');
+    return updated;
+  }
+
+  async delete(id: string, userId: string): Promise<void> {
+    // Ownership scoped in the WHERE clause. Assets are removed automatically by
+    // the ON DELETE CASCADE foreign key on assets.portfolio_id.
+    const result = await this.prisma.portfolio.deleteMany({
+      where: { id, userId },
+    });
+    if (result.count === 0) {
+      // No portfolio with that id for this user (missing or not owned).
+      throw new NotFoundError('Portfolio');
+    }
   }
 
   private toDomain(row: {
