@@ -29,6 +29,9 @@ jobs:
       - name: Instalar dependências
         run: pnpm install --frozen-lockfile
 
+      - name: Gerar Prisma Client
+        run: pnpm --filter @invester/api prisma:generate
+
       - name: Lint do backend
         run: pnpm --filter @invester/api lint
 
