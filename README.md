@@ -71,7 +71,6 @@ docker compose up -d postgres redis
 ```bash
 cd apps/api
 cp .env.example .env
-# edite .env e defina BRAPI_TOKEN (https://brapi.dev) e um JWT_SECRET forte
 pnpm install
 pnpm prisma:migrate
 pnpm dev
