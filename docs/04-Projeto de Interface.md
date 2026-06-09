@@ -15,20 +15,23 @@ Apresenta as principais interfaces da plataforma. Discute como elas foram elabor
 **Requisitos:**  
 RF-002 – Autenticação do usuário (login/logout) com JWT.
   
-<img width="347" height="228" alt="image" src="" />
+<img width="564" height="837" alt="Component 5 (1)" src="https://github.com/user-attachments/assets/c66d4859-1e0e-4bf1-b2a2-dae6bc501e14" />
 
-<img width="346" height="225" alt="image" src="" />
+<img width="924" height="234" alt="Component 5 (2)" src="https://github.com/user-attachments/assets/430256f0-3c33-4ee5-8be8-3ba4e9d1fb70" />
+
 
 **Requisitos:**  
 RF-001 – Cadastro de usuário (nome, e-mail, senha).
 
-<img width="345" height="226" alt="image" src="" />
+<img width="564" height="837" alt="Component 4" src="https://github.com/user-attachments/assets/082161ac-6c0e-4db9-a72f-604799ba76fa" />
+
   
 **Requisitos:**  
 RF-003 – Criar carteira de investimentos.
 RF-012 – Autorização por posse (a carteira é associada ao usuário autenticado).
 
-<img width="346" height="225" alt="image" src="" />
+<img width="1078" height="496" alt="Component 6" src="https://github.com/user-attachments/assets/b34241f5-9fae-40bf-b0d3-4bbd26621dd5" />
+
  
 **Requisitos:**  
 RF-004 – Listar as carteiras do usuário (paginado).
