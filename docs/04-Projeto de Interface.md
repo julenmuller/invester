@@ -37,8 +37,10 @@ RF-012 – Autorização por posse (a carteira é associada ao usuário autentic
 RF-004 – Listar as carteiras do usuário (paginado).
 RF-010 – Patrimônio consolidado no dashboard.
 
-<img width="345" height="223" alt="image" src="" />
- 
+<img width="1616" height="405" alt="Component 5 (3)" src="https://github.com/user-attachments/assets/e3a0e0c3-9cd5-4747-975b-212408feefed" />
+
+<img width="1616" height="1104" alt="Component 4 (1)" src="https://github.com/user-attachments/assets/2152e903-2d14-4250-aba9-2d070c88ce8e" />
+
 **Requisitos:**  
 RF-005 – Visualizar o detalhe da carteira (ativos, cotações, lucro/prejuízo, valor total).
 RF-009 – Buscar e filtrar ativos dentro da carteira (por código e por tipo).
